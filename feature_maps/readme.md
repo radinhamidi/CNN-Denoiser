@@ -1,0 +1,1 @@
+Feature maps of the dataset images  can be found here. These files are the compressed layer of the autoencoder.
