@@ -79,8 +79,8 @@ You can see that most of the confusion is caused when objects are visually simil
 
 
 ## Acknowledgment
-This project is done for EE8204 final project. 
-Instructor: Dr. Kandasamy Illanko
-by Radin Hamidi Rad
-Ryerson University
+This project is done for EE8204 final project.  <br>
+Instructor: Dr. Kandasamy Illanko<br>
+by Radin Hamidi Rad<br>
+Ryerson University<br>
 Summer 2020
