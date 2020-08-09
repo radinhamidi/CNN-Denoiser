@@ -69,7 +69,7 @@ You can see that most of the confusion is caused when objects are visually simil
 
 |       CIFAR-10 |Original (Without Noise)		 |Reconstructed The Noisy Input                          |
 |----------------|-------------------------------|-----------------------------|
-|Accuracy|        54.7%       |      45.26%   |
+|Accuracy|        94.7%       |      88.26%   |
 
 ## Preliminary Report
 You can find prelimiary repot [here](https://github.com/radrammer/CNN-Denoiser/blob/master/preliminary%20report/Image_Denoising_Using_Variational_Convolutional_Neural_Network.pdf). It's submitted for mid semester.
