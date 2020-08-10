@@ -26,6 +26,40 @@ test = np.load('./dataset/test_x_50.npy')
 labels = np.loadtxt('./dataset/class_names.txt', dtype=np.str)
 print('Data loaded.')
 
+
+# def loss
+def vae_loss(y_true, y_pred):
+    reconstruction_loss = mse(y_true, y_pred)
+
+    reconstruction_loss *= output_dim
+    kl_loss = 1 + z_log_var - K.square(z_mean) - K.exp(z_log_var)
+    kl_loss = K.sum(kl_loss, axis=-1)
+    kl_loss *= -0.5
+    vae_loss = K.mean(reconstruction_loss + kl_loss)
+    return vae_loss
+
+
+# reparameterization trick
+# instead of sampling from Q(z|X), sample epsilon = N(0,I)
+# z = z_mean + sqrt(var) * epsilon
+def sampling(args):
+    """Reparameterization trick by sampling from an isotropic unit Gaussian.
+
+    # Arguments
+        args (tensor): mean and log of variance of Q(z|X)
+
+    # Returns
+        z (tensor): sampled latent vector
+    """
+
+    z_mean, z_log_var = args
+    batch = K.shape(z_mean)[0]
+    dim = K.int_shape(z_mean)[1]
+    # by default, random_normal has mean = 0 and std = 1.0
+    epsilon = K.random_normal(shape=(batch, dim))
+    return z_mean + K.exp(0.5 * z_log_var) * epsilon
+
+
 # load encoder model
 model_names = []
 for path in glob.glob('./models/encoder_*.json'):
@@ -87,6 +121,15 @@ input_img = Input(shape=(data_dim,))
 # Dense part
 # hidden #1 in encoder
 hidden_layer_1 = Dense(encoder_hidden_layer_dim, activation='relu')(input_img)
+
+# Variational Neurons
+# z_mean = Dense(latent_dim, name='z_mean')(x)
+# z_log_var = Dense(latent_dim, name='z_log_var')(x)
+
+# # use reparameterization trick to push the sampling out as input
+# # note that "output_shape" isn't necessary with the TensorFlow backend
+# z = Lambda(sampling, output_shape=(latent_dim,), name='z')([z_mean, z_log_var])
+
 # hidden #2 in encoder
 # hidden_layer_1_2 = Dense(encoder_hidden_layer_dim_2, activation='relu')(hidden_layer_1)
 # "encoded" is the encoded representation of the input
